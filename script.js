@@ -26,9 +26,14 @@
 // }
 
 $(document).ready(() => {
-    const params = new Proxy(new URLSearchParams(window.location.search), {
-        get: (searchParams, prop) => searchParams.get(prop),
-    });
+    const params = (() => {
+        let tempObj = {}, key, value;
+        for ([key, value] of new URLSearchParams(window.location.search)) {
+            tempObj[key] = value;
+        };
+        queryParams = tempObj;
+        return tempObj;
+    })();
     // Get the value of "some_key" in eg "https://example.com/?some_key=some_value"
     let code = params.code; // "some_value"
 
@@ -50,10 +55,33 @@ $(document).ready(() => {
             <button onclick="process('${code}')">Já inseri os dados</button>
         `);
     } else {
-        $(".box").html(`
+        $(".box").append(`
             <div>
                Utilize esse endereço como URL da sua aplicação
             </div>
+        `);
+    }
+
+    if (Object.keys(params).length > 1) {
+        function rows() {
+            let html = "";
+            Object.keys(params).forEach(key => {
+                html += `<tr><td>${key}</td><td>${params[key]}</td></tr>`;
+            });
+            return html;
+        }
+
+        let headers = Object.keys(params).map(key => `<th>${key}</th>`).join("");
+        $(".box").append(`
+            <div style="margin-bottom: -10px; font-size: 20px;"> Outros parâmetros </div>
+            <table>
+                <!-- <thead>
+                    ${headers}
+                </thead> -->
+                <tbody>
+                    ${rows()}
+                </tbody>
+            <table>
         `);
     }
 });
