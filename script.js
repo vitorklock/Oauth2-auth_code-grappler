@@ -40,19 +40,10 @@ $(document).ready(() => {
     if (code) {
         console.log(code);
         $(".box").html(`
-            <div>
-                client_id:
-                <input id="caId" type="text">
-            </div>
-            <div>
-                client_secret:
-                <input id="caSecret" type="text">
-            </div>
             <p style="text-align: center;">
                 Você já possui um código <br/ > <i>${code}</i>
                 <br /> Insira seus dados novamente para continuar
             </p>
-            <button onclick="process('${code}')">Já inseri os dados</button>
         `);
     } else {
         $(".box").append(`
