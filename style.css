@@ -130,6 +130,7 @@ table {
     border-spacing: 0;
     width: 100%;
     font-size: 16px;
+    word-break: break-word;
 }
 table thead th {
     background-color: var(--dark);
@@ -142,4 +143,5 @@ table tbody td {
     border: solid 1px var(--light);
     color: var(--light);
     padding: 10px;
+    min-width: 120px;
 }
